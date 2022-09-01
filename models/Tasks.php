@@ -150,7 +150,7 @@ class Tasks extends Config {
         // }
         // $resultado['status'] =  $sql->execute();
         // return $resultado;
-        echo "Insertar tarea";
+        return "Insertar tarea";
     }
 
     // Actualiza una tarea
@@ -193,7 +193,7 @@ class Tasks extends Config {
         // $sql->bindValue(5, $admin);
         // $result['status'] = $sql->execute();
         // return $result;
-        echo "Insertar user";
+        return "Insertar user";
     }
 
     public function deleteUser($id) {
