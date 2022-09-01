@@ -51,12 +51,7 @@ switch ($_GET["option"]) {
         $datos = $tasks->delete($body["id"]);
         echo json_encode($datos);
         break;
-
-    case "searchDate":
-        $datos = $tasks->searchDate($body["start"], $body["end"]);
-        echo json_encode($datos);
-        break;
-
+        
     case "insertUser":
         $datos = $tasks->insertUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin']);
         echo json_encode($datos);

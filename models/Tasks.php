@@ -144,11 +144,11 @@ class Tasks extends Config {
         $sql->bindValue(3, $end);
         $sql->bindValue(4, $asignment);
         $sql->bindValue(5, $notes);
-        $resultado['status'] =  $sql->execute();
         $lastInserId =  $link->lastInsertId();
         if ($lastInserId != "0") {
             $resultado['id'] = $lastInserId;
         }
+        $resultado['status'] =  $sql->execute();
         return $resultado;
     }
 
@@ -169,7 +169,7 @@ class Tasks extends Config {
         return $result;
     }
 
-    // Para borrar tareas
+    // Para borrar una tarea
     public function delete($id) {
         $link = parent::connect();
         parent::set_names();
@@ -178,30 +178,6 @@ class Tasks extends Config {
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();
         return $result;
-    }
-
-
-    // Busca las actividades que comiencen en un rango de fechas
-    public function searchDate($from, $to) {
-        $link = parent::connect();
-        parent::set_names();
-        $sql = "SELECT * FROM task WHERE start BETWEEN ? AND ?;";
-        $sql = $link->prepare($sql);
-        $sql->bindValue(1, $from);
-        $sql->bindValue(2, $to);
-        $results = $sql->fetch(PDO::FETCH_OBJ);
-        foreach ($results as $r) {
-            $array[] = [
-                'id' => $r->id,
-                'title' => $r->title,
-                'start' => $r->start,
-                'end' => $r->end,
-                'status' => $r->status,
-                'asignment' => $r->asignment,
-                'notes' => $r->notes
-            ];
-        }
-        return $array;
     }
 
     public function insertUser($name, $email, $pass, $color, $admin) {
