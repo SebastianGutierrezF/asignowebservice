@@ -144,10 +144,10 @@ class Tasks extends Config {
         $sql->bindValue(3, $end);
         $sql->bindValue(4, $asignment);
         $sql->bindValue(5, $notes);
-        $lastInserId =  $link->lastInsertId();
-        if ($lastInserId != "0") {
-            $resultado['id'] = $lastInserId;
-        }
+        // $lastInserId =  $link->lastInsertId();
+        // if ($lastInserId != "0") {
+        //     $resultado['id'] = $lastInserId;
+        // }
         $resultado['status'] =  $sql->execute();
         return $resultado;
     }
