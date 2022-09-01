@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-type: application/json; charset=utf-8");
 header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS, INSERT, DELETE, insertUser, deleteUser");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS, INSERT, DELETE, insertUser, deleteUser, PATCH, PUT, HEAD");
 
 class Config
 {

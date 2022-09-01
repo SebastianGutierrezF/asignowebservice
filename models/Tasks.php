@@ -90,7 +90,7 @@ class Tasks extends Config {
     public function getAll() {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT task.*, user.name FROM task JOIN user ON task.asignment = user.id ORDER BY start";
+        $sql = "SELECT task.*, user.name FROM task JOIN user ON task.asignment = user.id ORDER BY start;";
         $sql = $db->prepare($sql);
         $sql->execute();
         $results = $sql->fetchAll(PDO::FETCH_OBJ);
@@ -134,10 +134,10 @@ class Tasks extends Config {
     }
 
     // Inserta una nueva tarea
-    public function insert($title, $start, $end, $asignment, $notes) {
+    public function insertTask($title, $start, $end, $asignment, $notes) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES (?,?,?,?,?);";
+        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?,?,?,?,?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $title);
         $sql->bindValue(2, $start);
@@ -153,7 +153,7 @@ class Tasks extends Config {
     }
 
     // Actualiza una tarea
-    public function update($title, $start, $end, $status, $asignment, $notes, $id) {
+    public function updateTask($title, $start, $end, $status, $asignment, $notes, $id) {
         $link = parent::connect();
         parent::set_names();
         $sql = "UPDATE task SET title = ?, start = ?, end = ?, status = ?, asignment = ?, notes = ? WHERE id = ?;";
@@ -170,10 +170,10 @@ class Tasks extends Config {
     }
 
     // Para borrar una tarea
-    public function delete($id) {
+    public function deleteTask($id) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "DELETE FROM task WHERE id = $id;";
+        $sql = "DELETE FROM task WHERE id = ?;";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();
@@ -183,7 +183,7 @@ class Tasks extends Config {
     public function insertUser($name, $email, $pass, $color, $admin) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "CALL insertUser(?,?,?,?,?)";
+        $sql = "CALL insertUser(?,?,?,?,?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
@@ -197,7 +197,7 @@ class Tasks extends Config {
     public function deleteUser($id) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "CALL deleteUser(?)";
+        $sql = "CALL deleteUser(?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();

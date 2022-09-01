@@ -37,21 +37,21 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
-    case "insert":
-        $datos = $tasks->insert($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
+    case "insertTask":
+        $datos = $tasks->insertTask($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
         echo json_encode($datos);
         break;
 
-    case "update":
-        $datos = $tasks->update($body["title"], $body["start"], $body["end"], $body["status"], $body["asignment"], $body["notes"], $body['id']);
+    case "updateTask":
+        $datos = $tasks->updateTask($body["title"], $body["start"], $body["end"], $body["status"], $body["asignment"], $body["notes"], $body["id"]);
         echo json_encode($datos);
         break;
 
-    case "delete":
-        $datos = $tasks->delete($body["id"]);
+    case "deleteTask":
+        $datos = $tasks->deleteTask($body["id"]);
         echo json_encode($datos);
         break;
-        
+
     case "insertUser":
         $datos = $tasks->insertUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin']);
         echo json_encode($datos);
