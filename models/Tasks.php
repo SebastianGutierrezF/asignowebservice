@@ -137,7 +137,7 @@ class Tasks extends Config {
     public function insertTask($title, $start, $end, $asignment, $notes) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?,?,?,?,?);";
+        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?, ?, ?, ?, ?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $title);
         $sql->bindValue(2, $start);
@@ -183,7 +183,7 @@ class Tasks extends Config {
     public function insertUser($name, $email, $pass, $color, $admin) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "CALL insertUser(?,?,?,?,?);";
+        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
