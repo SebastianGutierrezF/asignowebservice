@@ -135,21 +135,22 @@ class Tasks extends Config {
 
     // Inserta una nueva tarea
     public function insertTask($title, $start, $end, $asignment, $notes) {
-        $link = parent::connect();
-        parent::set_names();
-        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?, ?, ?, ?, ?);";
-        $sql = $link->prepare($sql);
-        $sql->bindValue(1, $title);
-        $sql->bindValue(2, $start);
-        $sql->bindValue(3, $end);
-        $sql->bindValue(4, $asignment);
-        $sql->bindValue(5, $notes);
+        // $link = parent::connect();
+        // parent::set_names();
+        // $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?, ?, ?, ?, ?);";
+        // $sql = $link->prepare($sql);
+        // $sql->bindValue(1, $title);
+        // $sql->bindValue(2, $start);
+        // $sql->bindValue(3, $end);
+        // $sql->bindValue(4, $asignment);
+        // $sql->bindValue(5, $notes);
         // $lastInserId =  $link->lastInsertId();
         // if ($lastInserId != "0") {
         //     $resultado['id'] = $lastInserId;
         // }
-        $resultado['status'] =  $sql->execute();
-        return $resultado;
+        // $resultado['status'] =  $sql->execute();
+        // return $resultado;
+        echo "Insertar tarea";
     }
 
     // Actualiza una tarea
@@ -181,17 +182,18 @@ class Tasks extends Config {
     }
 
     public function insertUser($name, $email, $pass, $color, $admin) {
-        $link = parent::connect();
-        parent::set_names();
-        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
-        $sql = $link->prepare($sql);
-        $sql->bindValue(1, $name);
-        $sql->bindValue(2, $email);
-        $sql->bindValue(3, $pass);
-        $sql->bindValue(4, $color);
-        $sql->bindValue(5, $admin);
-        $result['status'] = $sql->execute();
-        return $result;
+        // $link = parent::connect();
+        // parent::set_names();
+        // $sql = "CALL insertUser(?, ?, ?, ?, ?);";
+        // $sql = $link->prepare($sql);
+        // $sql->bindValue(1, $name);
+        // $sql->bindValue(2, $email);
+        // $sql->bindValue(3, $pass);
+        // $sql->bindValue(4, $color);
+        // $sql->bindValue(5, $admin);
+        // $result['status'] = $sql->execute();
+        // return $result;
+        echo "Insertar user";
     }
 
     public function deleteUser($id) {
