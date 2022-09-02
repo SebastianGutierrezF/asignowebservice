@@ -148,8 +148,9 @@ class Tasks extends Config {
         // if ($lastInserId != "0") {
         //     $resultado['id'] = $lastInserId;
         // }
-        $resultado['status'] =  $sql->execute();
-        return $resultado;
+        // $resultado['status'] =  $sql->execute();
+        $result['status'] =  true;
+        return $result;
     }
 
     // Actualiza una tarea
@@ -190,7 +191,8 @@ class Tasks extends Config {
         $sql->bindValue(3, $pass);
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
-        $result['status'] = $sql->execute();
+        // $result['status'] = $sql->execute();
+        $result['status'] =  true;
         return $result;
     }
 
