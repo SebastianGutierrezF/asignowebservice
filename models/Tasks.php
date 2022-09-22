@@ -94,7 +94,7 @@ class Tasks extends Config {
     public function getAll() {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT task.*, user.name FROM task JOIN user ON task.asignment = user.id ORDER BY start";
+        $sql = "SELECT task.*, user.name FROM task JOIN user ON task.asignment = user.id ORDER BY start;";
         $sql = $db->prepare($sql);
         $sql->execute();
         $results = $sql->fetchAll(PDO::FETCH_OBJ);
@@ -138,26 +138,27 @@ class Tasks extends Config {
     }
 
     // Inserta una nueva tarea
-    public function insert($title, $start, $end, $asignment, $notes) {
+    public function insertTask($title, $start, $end, $asignment, $notes) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES (?,?,?,?,?);";
+        $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?, ?, ?, ?, ?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $title);
         $sql->bindValue(2, $start);
         $sql->bindValue(3, $end);
         $sql->bindValue(4, $asignment);
         $sql->bindValue(5, $notes);
-        $resultado['status'] =  $sql->execute();
-        $lastInserId =  $link->lastInsertId();
-        if ($lastInserId != "0") {
-            $resultado['id'] = $lastInserId;
-        }
-        return $resultado;
+        // $lastInserId =  $link->lastInsertId();
+        // if ($lastInserId != "0") {
+        //     $resultado['id'] = $lastInserId;
+        // }
+        // $resultado['status'] =  $sql->execute();
+        $result['status'] =  true;
+        return $result;
     }
 
     // Actualiza una tarea
-    public function update($title, $start, $end, $status, $asignment, $notes, $id) {
+    public function updateTask($title, $start, $end, $status, $asignment, $notes, $id) {
         $link = parent::connect();
         parent::set_names();
         $sql = "UPDATE task SET title = ?, start = ?, end = ?, status = ?, asignment = ?, notes = ? WHERE id = ?;";
@@ -173,59 +174,36 @@ class Tasks extends Config {
         return $result;
     }
 
-    // Para borrar tareas
-    public function delete($id) {
+    // Para borrar una tarea
+    public function deleteTask($id) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "DELETE FROM task WHERE id = $id;";
+        $sql = "DELETE FROM task WHERE id = ?;";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();
         return $result;
     }
 
-
-    // Busca las actividades que comiencen en un rango de fechas
-    public function searchDate($from, $to) {
-        $link = parent::connect();
-        parent::set_names();
-        $sql = "SELECT * FROM task WHERE start BETWEEN ? AND ?;";
-        $sql = $link->prepare($sql);
-        $sql->bindValue(1, $from);
-        $sql->bindValue(2, $to);
-        $results = $sql->fetch(PDO::FETCH_OBJ);
-        foreach ($results as $r) {
-            $array[] = [
-                'id' => $r->id,
-                'title' => $r->title,
-                'start' => $r->start,
-                'end' => $r->end,
-                'status' => $r->status,
-                'asignment' => $r->asignment,
-                'notes' => $r->notes
-            ];
-        }
-        return $array;
-    }
-
     public function insertUser($name, $email, $pass, $color, $admin) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "CALL insertUser(?,?,?,?,?)";
+        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
         $sql->bindValue(3, $pass);
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
-        $result['status'] = $sql->execute();
+        // $result['status'] = $sql->execute();
+        $result['status'] =  true;
         return $result;
     }
 
     public function deleteUser($id) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "CALL deleteUser(?)";
+        $sql = "CALL deleteUser(?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();
