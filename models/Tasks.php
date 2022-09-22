@@ -10,9 +10,13 @@ class Tasks extends Config {
         $sql->bindValue(2, $pass);
         $sql->execute();
         $query = $sql->fetch();
-        $result['id'] = $query['id'];
-        $result['name'] = $query['name'];
-        $result['admin'] = $query['admin'];
+        if ($query) {
+            $result['id'] = $query['id'];
+            $result['name'] = $query['name'];
+            $result['admin'] = $query['admin'];
+        } else {
+            $result['id'] = 0;
+        }
         return $result;
     }
 
