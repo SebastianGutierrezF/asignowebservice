@@ -4,19 +4,37 @@ class Tasks extends Config {
     public function login($email, $pass) {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT id, name, admin FROM user WHERE email = ? AND pass = ?;";
+        $sql = "SELECT id, name, admin, pass FROM user WHERE email = ?;";
         $sql = $db->prepare($sql);
         $sql->bindValue(1, $email);
-        $sql->bindValue(2, $pass);
         $sql->execute();
         $query = $sql->fetch();
-        if ($query) {
+        // Si encuentra al usuario y la contraseña coincide entonces retorna los datos
+        if ($query && password_verify($pass, $query['pass'])) {
             $result['id'] = $query['id'];
             $result['name'] = $query['name'];
             $result['admin'] = $query['admin'];
         } else {
             $result['id'] = 0;
         }
+        return $result;
+    }
+
+    // Insertar un nuevo usuario
+    public function insertUser($name, $email, $pass, $color, $admin) {
+        $link = parent::connect();
+        parent::set_names();
+        // Encripta la contraseña recbidia y la manda a la BD
+        $passencrypt = password_hash($pass, PASSWORD_DEFAULT);
+        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $name);
+        $sql->bindValue(2, $email);
+        $sql->bindValue(3, $passencrypt);
+        $sql->bindValue(4, $color);
+        $sql->bindValue(5, $admin);
+        $result['status'] = $sql->execute();
+        $result['evidencia'] = $passencrypt;
         return $result;
     }
 
@@ -182,21 +200,6 @@ class Tasks extends Config {
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
         $result['status'] = $sql->execute();
-        return $result;
-    }
-
-    public function insertUser($name, $email, $pass, $color, $admin) {
-        $link = parent::connect();
-        parent::set_names();
-        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
-        $sql = $link->prepare($sql);
-        $sql->bindValue(1, $name);
-        $sql->bindValue(2, $email);
-        $sql->bindValue(3, $pass);
-        $sql->bindValue(4, $color);
-        $sql->bindValue(5, $admin);
-        // $result['status'] = $sql->execute();
-        $result['status'] =  true;
         return $result;
     }
 
