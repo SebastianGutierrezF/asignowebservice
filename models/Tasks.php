@@ -42,7 +42,7 @@ class Tasks extends Config {
     public function getAllowed($id) {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT task.*, user.name FROM task JOIN userviews ON userviews.views = task.asignment JOIN user ON user.id = task.asignment WHERE userviews.user = ? ORDER BY start;";
+        $sql = "SELECT task.*, user.name FROM task JOIN userviews ON userviews.views = task.asignment JOIN user ON user.id = task.asignment WHERE user.team = (SELECT team FROM user WHERE id = ?) ORDER BY start;";
         $sql = $db->prepare($sql);
         $sql->bindValue(1, $id);
         $sql->execute();
@@ -227,4 +227,66 @@ class Tasks extends Config {
         $result['status'] = $sql->execute();
         return $result;
     } 
+
+    public function getTeams() {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "SELECT * FROM getTeams;";
+        $sql = $link->prepare($sql);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        $json = array();
+        foreach ($result as $data) {
+            // Sólo ingresa los usuarios si el equipo tiene miembros
+            $usersData = array();
+            if ($data->users) {
+                $users = explode('|', $data->users);
+                foreach ($users as $user) {
+                    $user = explode(',', $user);
+                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+                }
+            }
+            $object = [
+                'team' => $data->team,
+                'tName' => $data->tName,
+                'users' => $usersData
+            ];
+            array_push($json, $object);
+        }
+        return $json;
+    }
+
+    public function getUnasigned() {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "SELECT * FROM getUnasigned;";
+        $sql = $link->prepare($sql);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        $json = array();
+        foreach ($result as $data) {
+            $usersData = array();
+            $users = explode('|', $data->users);
+            foreach ($users as $user) {
+                $user = explode(',', $user);
+                array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+            }
+            $object = [
+                'team' => '',
+                'tName' => '',
+                'users' => $usersData
+            ];
+            array_push($json, $object);
+        }
+        return $json;
+    }
+
+    public function addTeam($name) {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "INSERT INTO team(name) VALUES(?);";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $name);
+        return $sql->execute();
+    }
 }

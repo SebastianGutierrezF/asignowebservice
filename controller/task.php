@@ -66,4 +66,19 @@ switch ($_GET["option"]) {
         $datos = $tasks->editUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['id']);
         echo json_encode($datos);
         break;
+
+    case "getTeams":
+        $datos = $tasks->getTeams();
+        echo json_encode($datos);
+        break;
+
+    case "getUnasigned":
+        $datos = $tasks->getUnasigned();
+        echo json_encode($datos);
+        break;
+
+    case "addTeam":
+        $datos = $tasks->addTeam($body['name']);
+        echo json_encode($datos);
+        break;
 }
