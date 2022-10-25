@@ -256,6 +256,35 @@ class Tasks extends Config {
         return $json;
     }
 
+    public function getTeam($idTeam) {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "SELECT * FROM getTeams WHERE team = ?;";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $idTeam);
+        $sql->execute();
+        $result = $sql->fetchAll(PDO::FETCH_OBJ);
+        $json = array();
+        foreach ($result as $data) {
+            // Sólo ingresa los usuarios si el equipo tiene miembros
+            $usersData = array();
+            if ($data->users) {
+                $users = explode('|', $data->users);
+                foreach ($users as $user) {
+                    $user = explode(',', $user);
+                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+                }
+            }
+            $object = [
+                'team' => $data->team,
+                'tName' => $data->tName,
+                'users' => $usersData
+            ];
+            array_push($json, $object);
+        }
+        return $json;
+    }
+
     public function getUnasigned() {
         $link = parent::connect();
         parent::set_names();
@@ -287,6 +316,25 @@ class Tasks extends Config {
         $sql = "INSERT INTO team(name) VALUES(?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
+        return $sql->execute();
+    }
+
+    public function addToTeam($idTeam, $idUser) {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "CALL addToTeam(?,?);";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $idTeam);
+        $sql->bindValue(2, $idUser);
+        return $sql->execute();
+    }
+
+    public function deleteTeam($team) {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "DELETE FROM team WHERE id = ?;";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $team);
         return $sql->execute();
     }
 }

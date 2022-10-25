@@ -81,4 +81,19 @@ switch ($_GET["option"]) {
         $datos = $tasks->addTeam($body['name']);
         echo json_encode($datos);
         break;
+
+    case "addToTeam":
+        $datos = $tasks->addToTeam($body['idTeam'], $body['idUser']);
+        echo json_encode($datos);
+        break;
+
+    case "deleteTeam":
+        $datos = $tasks->deleteTeam($body['team']);
+        echo json_encode($datos);
+        break;
+
+    case "getTeam":
+        $datos = $tasks->getTeam($body['team']);
+        echo json_encode($datos);
+        break;
 }
