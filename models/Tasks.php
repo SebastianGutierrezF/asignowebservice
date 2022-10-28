@@ -166,13 +166,7 @@ class Tasks extends Config {
         $sql->bindValue(3, $end);
         $sql->bindValue(4, $asignment);
         $sql->bindValue(5, $notes);
-        // $lastInserId =  $link->lastInsertId();
-        // if ($lastInserId != "0") {
-        //     $resultado['id'] = $lastInserId;
-        // }
-        // $resultado['status'] =  $sql->execute();
-        $result['status'] =  true;
-        return $result;
+        return $sql->execute();
     }
 
     // Actualiza una tarea
@@ -188,8 +182,7 @@ class Tasks extends Config {
         $sql->bindValue(5, $asignment);
         $sql->bindValue(6, $notes);
         $sql->bindValue(7, $id);
-        $result['status'] = $sql->execute();
-        return $result;
+        return $sql->execute();
     }
 
     // Para borrar una tarea
@@ -199,8 +192,7 @@ class Tasks extends Config {
         $sql = "DELETE FROM task WHERE id = ?;";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $id);
-        $result['status'] = $sql->execute();
-        return $result;
+        return $sql->execute();
     }
 
     public function deleteUser($id) {
