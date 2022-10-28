@@ -4,7 +4,7 @@ class Tasks extends Config {
     public function login($email, $pass) {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT id, name, admin, pass FROM user WHERE email = ?;";
+        $sql = "SELECT id, name, admin, pass, team FROM user WHERE email = ?;";
         $sql = $db->prepare($sql);
         $sql->bindValue(1, $email);
         $sql->execute();
@@ -14,6 +14,7 @@ class Tasks extends Config {
             $result['id'] = $query['id'];
             $result['name'] = $query['name'];
             $result['admin'] = $query['admin'];
+            $result['team'] = $query['team'];
         } else {
             $result['id'] = 0;
         }
@@ -39,12 +40,12 @@ class Tasks extends Config {
     }
 
     // Obtiene sólo la vista de actividades permitidas ver para el usuario
-    public function getAllowed($id) {
+    public function getAllowed($team) {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT task.*, user.name FROM task JOIN userviews ON userviews.views = task.asignment JOIN user ON user.id = task.asignment WHERE user.team = (SELECT team FROM user WHERE id = ?) ORDER BY start;";
+        $sql = "SELECT task.*, user.name FROM task JOIN user ON user.id = task.asignment WHERE user.team = ? ORDER BY start;";
         $sql = $db->prepare($sql);
-        $sql->bindValue(1, $id);
+        $sql->bindValue(1, $team);
         $sql->execute();
         $results = $sql->fetchAll(PDO::FETCH_OBJ);
         $array = [];
@@ -64,12 +65,12 @@ class Tasks extends Config {
     }
 
     // Obtiene sólo los usuarios a los que les puede asignar tareas
-    public function getUsers($id) {
+    public function getUsers($team) {
         $db = parent::connect();
         parent::set_names();
-        $sql = "SELECT user.* FROM user JOIN userviews ON userviews.views = user.id WHERE userviews.user = ?;";
+        $sql = "SELECT * FROM user WHERE team = ?;";
         $sql = $db->prepare($sql);
-        $sql->bindValue(1, $id);
+        $sql->bindValue(1, $team);
         $sql->execute();
         $results = $sql->fetchAll(PDO::FETCH_OBJ);
         $array = [];

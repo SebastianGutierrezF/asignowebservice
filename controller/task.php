@@ -18,12 +18,12 @@ switch ($_GET["option"]) {
         break;
 
     case "getAllowed":
-        $datos = $tasks->getAllowed($body['id']);
+        $datos = $tasks->getAllowed($body['team']);
         echo json_encode($datos);
         break;
 
     case "getUsers":
-        $datos = $tasks->getUsers($body['id']);
+        $datos = $tasks->getUsers($body['team']);
         echo json_encode($datos);
         break;
 
