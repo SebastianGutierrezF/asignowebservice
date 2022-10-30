@@ -53,7 +53,7 @@ switch ($_GET["option"]) {
         break;
 
     case "insertUser":
-        $datos = $tasks->insertUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin']);
+        $datos = $tasks->insertUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
         echo json_encode($datos);
         break;
 
@@ -63,7 +63,7 @@ switch ($_GET["option"]) {
         break;
 
     case "editUser":
-        $datos = $tasks->editUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['id']);
+        $datos = $tasks->editUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['id'], $body['photo']);
         echo json_encode($datos);
         break;
 

@@ -22,20 +22,20 @@ class Tasks extends Config {
     }
 
     // Insertar un nuevo usuario
-    public function insertUser($name, $email, $pass, $color, $admin) {
+    public function insertUser($name, $email, $pass, $color, $admin, $photo) {
         $link = parent::connect();
         parent::set_names();
         // Encripta la contraseña recbidia y la manda a la BD
         $passencrypt = password_hash($pass, PASSWORD_DEFAULT);
-        $sql = "CALL insertUser(?, ?, ?, ?, ?);";
+        $sql = "CALL insertUser(?, ?, ?, ?, ?, ?);";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
         $sql->bindValue(3, $passencrypt);
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
+        $sql->bindValue(6, $photo);
         $result['status'] = $sql->execute();
-        $result['evidencia'] = $passencrypt;
         return $result;
     }
 
@@ -206,17 +206,18 @@ class Tasks extends Config {
         return $result;
     }
 
-    public function editUser($name, $email, $pass, $color, $admin, $id) {
+    public function editUser($name, $email, $pass, $color, $admin, $id, $photo) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ? WHERE id = ?";
+        $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ?, photo = ? WHERE id = ?";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
         $sql->bindValue(3, $pass);
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
-        $sql->bindValue(6, $id);
+        $sql->bindValue(6, $photo);
+        $sql->bindValue(7, $id);
         $result['status'] = $sql->execute();
         return $result;
     } 
@@ -235,8 +236,8 @@ class Tasks extends Config {
             if ($data->users) {
                 $users = explode('|', $data->users);
                 foreach ($users as $user) {
-                    $user = explode(',', $user);
-                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+                    $user = explode(',', $user, 4);
+                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
                 }
             }
             $object = [
@@ -264,8 +265,8 @@ class Tasks extends Config {
             if ($data->users) {
                 $users = explode('|', $data->users);
                 foreach ($users as $user) {
-                    $user = explode(',', $user);
-                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+                    $user = explode(',', $user, 4);
+                    array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
                 }
             }
             $object = [
@@ -290,8 +291,8 @@ class Tasks extends Config {
             $usersData = array();
             $users = explode('|', $data->users);
             foreach ($users as $user) {
-                $user = explode(',', $user);
-                array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2]]);
+                $user = explode(',', $user, 4);
+                array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
             }
             $object = [
                 'team' => '',
