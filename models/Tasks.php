@@ -225,6 +225,8 @@ class Tasks extends Config {
     public function getTeams() {
         $link = parent::connect();
         parent::set_names();
+        $sql = "SET SESSION group_concat_max_len = 1000000;";
+        $link->exec($sql);
         $sql = "SELECT * FROM getTeams;";
         $sql = $link->prepare($sql);
         $sql->execute();
@@ -235,8 +237,8 @@ class Tasks extends Config {
             $usersData = array();
             if ($data->users) {
                 $users = explode('|', $data->users);
-                foreach ($users as $user) {
-                    $user = explode(',', $user, 4);
+                foreach ($users as $u) {
+                    $user = explode(',', $u, 4);
                     array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
                 }
             }
@@ -264,8 +266,8 @@ class Tasks extends Config {
             $usersData = array();
             if ($data->users) {
                 $users = explode('|', $data->users);
-                foreach ($users as $user) {
-                    $user = explode(',', $user, 4);
+                foreach ($users as $u) {
+                    $user = explode(',', $u, 4);
                     array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
                 }
             }
@@ -290,8 +292,8 @@ class Tasks extends Config {
         foreach ($result as $data) {
             $usersData = array();
             $users = explode('|', $data->users);
-            foreach ($users as $user) {
-                $user = explode(',', $user, 4);
+            foreach ($users as $u) {
+                $user = explode(',', $u, 4);
                 array_push($usersData, ['id' => $user[0], 'name' => $user[1], 'email' => $user[2], 'photo' => $user[3]]);
             }
             $object = [
