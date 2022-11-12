@@ -255,6 +255,8 @@ class Tasks extends Config {
     public function getTeam($idTeam) {
         $link = parent::connect();
         parent::set_names();
+        $sql = "SET SESSION group_concat_max_len = 1000000;";
+        $link->exec($sql);
         $sql = "SELECT * FROM getTeams WHERE team = ?;";
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $idTeam);
