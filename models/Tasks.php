@@ -186,6 +186,16 @@ class Tasks extends Config {
         return $sql->execute();
     }
 
+    public function updateStatus($id, $status) {
+        $link = parent::connect();
+        parent::set_names();
+        $sql = "UPDATE task SET status = ? WHERE id = ?;";
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $status);
+        $sql->bindValue(2, $id);
+        return $sql->execute();
+    }
+
     // Para borrar una tarea
     public function deleteTask($id) {
         $link = parent::connect();

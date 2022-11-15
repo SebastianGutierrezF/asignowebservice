@@ -47,6 +47,11 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
+    case "updateStatus":
+        $datos = $tasks->updateStatus($body['id'], $body['status']);
+        echo json_encode($datos);
+        break;
+
     case "deleteTask":
         $datos = $tasks->deleteTask($body["id"]);
         echo json_encode($datos);
