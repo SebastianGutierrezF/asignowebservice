@@ -37,8 +37,8 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
-    case "insertTask":
-        $datos = $tasks->insertTask($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
+    case "addTask":
+        $datos = $tasks->addTask($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
         echo json_encode($datos);
         break;
 

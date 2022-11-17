@@ -22,7 +22,7 @@ class Tasks extends Config {
     }
 
     // Insertar un nuevo usuario
-    public function insertUser($name, $email, $pass, $color, $admin, $photo) {
+    public function addUser($name, $email, $pass, $color, $admin, $photo) {
         $link = parent::connect();
         parent::set_names();
         // Encripta la contraseña recbidia y la manda a la BD
@@ -157,7 +157,7 @@ class Tasks extends Config {
     }
 
     // Inserta una nueva tarea
-    public function insertTask($title, $start, $end, $asignment, $notes) {
+    public function addTask($title, $start, $end, $asignment, $notes) {
         $link = parent::connect();
         parent::set_names();
         $sql = "INSERT INTO task(title, start, end, asignment, notes) VALUES(?, ?, ?, ?, ?);";
