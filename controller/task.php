@@ -1,6 +1,9 @@
 <?php
 require_once("../config/config.php");
 require_once("../models/Tasks.php");
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
 $tasks = new Tasks();
 
 $body = json_decode(file_get_contents("php://input"), true);
