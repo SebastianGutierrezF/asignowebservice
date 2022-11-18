@@ -41,8 +41,8 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
-    case "addTask":
-        $datos = $tasks->addTask($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
+    case "addTask1":
+        $datos = $tasks->addTask1($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
         echo json_encode($datos);
         break;
 
@@ -61,8 +61,8 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
-    case "addUser":
-        $datos = $tasks->addUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
+    case "addUser1":
+        $datos = $tasks->addUser1($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
         echo json_encode($datos);
         break;
 
