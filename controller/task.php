@@ -62,7 +62,8 @@ switch ($_GET["option"]) {
         break;
 
     case "addUser1":
-        $datos = $tasks->addUser1($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
+        $datos = true;
+        // $tasks->addUser1($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
         echo json_encode($datos);
         break;
 
