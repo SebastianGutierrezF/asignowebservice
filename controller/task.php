@@ -42,7 +42,9 @@ switch ($_GET["option"]) {
         break;
 
     case "addTask1":
-        $datos = $tasks->addTask1($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
+        // $datos = $tasks->addTask1($body["title"], $body["start"], $body["end"], $body["asignment"], $body["notes"]);
+        $datos = $tasks->addTask1("Hacer asigno", "2022-11-18 9:0", "2022-11-19 9:0", "74", "Arreglar problema CORS");
+
         echo json_encode($datos);
         break;
 
