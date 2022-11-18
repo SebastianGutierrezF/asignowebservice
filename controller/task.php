@@ -2,10 +2,11 @@
 require_once("../config/config.php");
 require_once("../models/Tasks.php");
 header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=utf-8");
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
-$tasks = new Tasks();
 
+$tasks = new Tasks();
 $body = json_decode(file_get_contents("php://input"), true);
 
 switch ($_GET["option"]) {
@@ -60,8 +61,8 @@ switch ($_GET["option"]) {
         echo json_encode($datos);
         break;
 
-    case "insertUser":
-        $datos = $tasks->insertUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
+    case "addUser":
+        $datos = $tasks->addUser($body['name'], $body['email'], $body['pass'], $body['color'], $body['admin'], $body['photo']);
         echo json_encode($datos);
         break;
 
