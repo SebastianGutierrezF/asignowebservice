@@ -167,7 +167,12 @@ class Tasks extends Config {
         $sql->bindValue(3, $end);
         $sql->bindValue(4, $asignment);
         $sql->bindValue(5, $notes);
-        return $sql->execute();
+        $resultado['estatus'] = $sql->execute();
+        $lastInsertId = $link->lastInsertId();
+        if ($lastInsertId != "0") {
+            $resultado['id'] = (int)$lastInsertId;
+        }
+        return $resultado;
     }
 
     // Actualiza una tarea
