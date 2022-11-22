@@ -224,7 +224,11 @@ class Tasks extends Config {
     public function editUser($name, $email, $pass, $color, $admin, $id, $photo) {
         $link = parent::connect();
         parent::set_names();
-        $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ?, photo = ? WHERE id = ?";
+        if ($photo == null) {
+            $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ? WHERE id = ?";
+        } else {
+            $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ?, photo = ? WHERE id = ?";
+        }
         $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
