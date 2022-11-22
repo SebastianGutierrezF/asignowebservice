@@ -23,19 +23,19 @@ class Tasks extends Config {
 
     // Insertar un nuevo usuario
     public function addUser1($name, $email, $pass, $color, $admin, $photo) {
-        // $link = parent::connect();
+        $link = parent::connect();
         parent::set_names();
         // Encripta la contraseña recbidia y la manda a la BD
         $passencrypt = password_hash($pass, PASSWORD_DEFAULT);
         $sql = "CALL insertUser(?, ?, ?, ?, ?, ?);";
-        // $sql = $link->prepare($sql);
-        // $sql->bindValue(1, $name);
-        // $sql->bindValue(2, $email);
-        // $sql->bindValue(3, $passencrypt);
-        // $sql->bindValue(4, $color);
-        // $sql->bindValue(5, $admin);
-        // $sql->bindValue(6, $photo);
-        // $result['status'] = $sql->execute();
+        $sql = $link->prepare($sql);
+        $sql->bindValue(1, $name);
+        $sql->bindValue(2, $email);
+        $sql->bindValue(3, $passencrypt);
+        $sql->bindValue(4, $color);
+        $sql->bindValue(5, $admin);
+        $sql->bindValue(6, $photo);
+        $result['status'] = $sql->execute();
         return true;
     }
 
