@@ -238,8 +238,7 @@ class Tasks extends Config {
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
         $sql->bindValue(7, $id);
-        $result['status'] = $sql->execute();
-        return $result;
+        return $sql->execute();
     } 
 
     public function getTeams() {
