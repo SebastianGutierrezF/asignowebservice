@@ -226,16 +226,17 @@ class Tasks extends Config {
         parent::set_names();
         if ($photo == null) {
             $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ? WHERE id = ?";
+            $sql = $link->prepare($sql);
         } else {
             $sql = "UPDATE user SET name = ?, email = ?, pass = ?, color = ?, admin = ?, photo = ? WHERE id = ?";
+            $sql = $link->prepare($sql);
+            $sql->bindValue(6, $photo);
         }
-        $sql = $link->prepare($sql);
         $sql->bindValue(1, $name);
         $sql->bindValue(2, $email);
         $sql->bindValue(3, $pass);
         $sql->bindValue(4, $color);
         $sql->bindValue(5, $admin);
-        $sql->bindValue(6, $photo);
         $sql->bindValue(7, $id);
         $result['status'] = $sql->execute();
         return $result;
